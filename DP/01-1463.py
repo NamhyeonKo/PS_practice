@@ -1,31 +1,23 @@
-global arry
-arry = [0] * 1000001
-arry[2] = 1
-arry[3] = 1
+def dp(k):
+    arry = [0,0,1,1]
 
-def rec_dp(n):
-    global arry
-    # n이 이미 DP 배열에 존재하는 경우
-    if arry[n] != 0:
-        return arry[n]
-    
-    # n이 DP 배열에 존재하지 않는 경우
+    # 반복문 돌리기
     # 3가지 경우로 나누고 그 중에 min 값을 DP 배열에 저장후 반환
-    min = 1000000
-    if n % 3 == 0:
-        if rec_dp(n//3) + 1 < min:
-            min = rec_dp(n//3) + 1
-    if n % 2 == 0:
-        if rec_dp(n//2) + 1 < min:
-            min = rec_dp(n//2) + 1
-    if rec_dp(n-1) + 1 < min:
-        min = rec_dp(n-1) + 1
-    
-    arry[n] = min
-    return min
+    for n in range(4,k+1):
+        min = 1000000
+        if n % 3 == 0:
+            if arry[n//3] + 1 < min:
+                min = arry[n//3] + 1
+        if n % 2 == 0:
+            if arry[n//2] + 1 < min:
+                min = arry[n//2] + 1
+        if arry[n - 1] + 1 < min:
+            min = arry[n - 1] + 1
+        # min이 그 수가 가질 수 있는 최소 경우이므로 배열에 추가
+        arry.append(min)
+    return arry[k]
 
 k = int(input())
-res = rec_dp(k)
-# for i in range(k+1):
-#     print(i, arry[i])
+res = dp(k)
+
 print(res)
