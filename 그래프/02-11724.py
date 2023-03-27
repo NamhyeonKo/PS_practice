@@ -1,11 +1,15 @@
 import sys
 
-def DFS(graph,v,visited):
-    visited[v-1] = True
-
-    for i in graph[v-1]:
-        if not visited[i-1]:
-            DFS(graph,i,visited)
+# 재귀를 통한 DFS는 recursion Error 발생
+# 반복(스택을 이용한)으로 구현
+def DFS(graph,start,visited):
+    stack = [start]
+    while stack:
+        v = stack.pop()
+        if not visited[v-1]:
+            visited[v-1] = True
+            for w in graph[v-1]:
+                stack.append(w)
 
 # 연결 요소의 개수가 dfs나 bfs와 같이 탐색 알고리즘으로 구했을 때
 # 같은 집합이 되면 즉, 모든 정점을 방문하면 1개고,
